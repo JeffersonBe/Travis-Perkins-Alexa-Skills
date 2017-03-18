@@ -1,5 +1,3 @@
-<snippet>
-  <content><![CDATA[
 # ${1:Alexa, Ask Travis Perkins}
 This project is an Alexa skill using AWS Lambda. As for the moment, you would be able to ask Alexa to buy a product in a specified quantity and it will trigger a confirmation email.
 ## Installation
@@ -18,6 +16,3 @@ Using a test simulator or an Amazon Echo, just ask: Alexa, ask Travis Perkins to
 Jefferson Bonnaire
 ## License
 TODO: Write license
-]]></content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
