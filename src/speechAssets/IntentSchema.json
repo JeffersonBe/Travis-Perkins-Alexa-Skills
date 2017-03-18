@@ -1,0 +1,17 @@
+{
+  "intents": [
+    {
+      "intent": "TravisPerkins",
+      "slots": [
+        {
+          "name": "product",
+          "type": "string"
+        },
+        {
+          "name": "numberOfProducts",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+}
