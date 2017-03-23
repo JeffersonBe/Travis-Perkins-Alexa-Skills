@@ -1,5 +1,8 @@
 'use strict';
 var Alexa = require('alexa-sdk');
+var AWS = require("aws-sdk");
+AWS.config.region = 'us-east-1'; //or whatever your region
+Alexa.APP_ID = 'YOUR-ALEXA-APP-ID';
 
 exports.handler = function (event, context, callback) {
 	var alexa = Alexa.handler(event, context);
@@ -13,12 +16,39 @@ var handlers = {
 		this.emit(':ask', 'Hi Jefferson, what product do you want to order from Travis Perkins?');
 	},
 	'TravisPerkins': function () {
-		console.log("TravisPerkins");
 		var numberOfProducts = this.event.request.intent.slots.numberOfProducts.value;
 		var product = this.event.request.intent.slots.product.value;
 		var output = "You have ordered " + numberOfProducts + " " + product;
 		var cardTitle = 'Travis Perkins';
 		var cardContent = 'You have ordered a product from Travis Perkins';
+		var sns = new AWS.SNS();
+		var paramsAddPermission = {
+			AWSAccountId: ['YOUR-AWS-ACCOUNT-ID'],
+			ActionName: ['Publish'],
+			Label: 'AlexaPublish',
+			TopicArn: 'YOUR-ARN'
+		};
+		console.log(paramsAddPermission);
+		sns.addPermission(paramsAddPermission, function (err, data) {
+			if (err) console.log(err, err.stack); // an error occurred
+			else console.log(data); // successful response
+		});
+
+		var jsonData = JSON.stringify({
+			"user": "Someone",
+			"quantity": numberOfProducts,
+			"thing": product
+		});
+		console.log(jsonData);
+		var paramsPublish = {
+			Message: jsonData,
+			Subject: 'STRING_VALUE',
+			TargetArn: 'YOUR-ARN'
+		};
+		sns.publish(paramsPublish, function (err, data) {
+			if (err) console.log(err, err.stack); // an error occurred
+			else console.log(data); // successful response
+		});
 		this.emit(':tell', output);
 	},
 	'AMAZON.HelpIntent': function () {
@@ -42,34 +72,14 @@ var handlers = {
 		this.attributes.speechOutput = this.t("HELP_MESSAGE");
 		this.attributes.repromptSpeech = this.t("HELP_REPROMPT");
 		this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech);
+	},
+	'LastOrder': function () {
+		this.emit(':tell', "Jefferson, you last ordered plasterboard from Travis Perkins on the 10th February 2017.");
+	},
+	'OweMoney': function () {
+		this.emit(':tell', "Jefferson, you owe £2746.92 on your Travis Perkins account.");
+	},
+	'AddToBasket': function () {
+		this.emit(':tell', "One Baxi boiler has been added to your basket");
 	}
-};
-
-var languageStrings = {
-	"en": {
-		"translation": {
-			"SKILL_NAME": "Travis Perkins",
-			"WELCOME_MESSAGE": "Welcome to %s. You can ask a question like, what\'s the recipe for a chest? ... Now, what can I help you with.",
-			"WELCOME_REPROMPT": "For instructions on what you can say, please say help me.",
-			"DISPLAY_CARD_TITLE": "%s  - Recipe for %s.",
-			"HELP_MESSAGE": "You can ask questions such as, what\'s the recipe, or, you can say exit...Now, what can I help you with?",
-			"HELP_REPROMPT": "You can say things like, what\'s the recipe, or you can say exit...Now, what can I help you with?",
-			"STOP_MESSAGE": "Goodbye!",
-			"RECIPE_REPEAT_MESSAGE": "Try saying repeat.",
-			"RECIPE_NOT_FOUND_MESSAGE": "I\'m sorry, I currently do not know ",
-			"RECIPE_NOT_FOUND_WITH_ITEM_NAME": "the recipe for %s. ",
-			"RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME": "that recipe. ",
-			"RECIPE_NOT_FOUND_REPROMPT": "What else can I help with?"
-		}
-	},
-	"en-US": {
-		"translation": {
-			"SKILL_NAME": "Travis Perkins",
-		}
-	},
-	"en-GB": {
-		"translation": {
-			"SKILL_NAME": "Travis Perkins",
-		}
-	},
 };

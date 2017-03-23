@@ -22,6 +22,15 @@
 		},
 		{
 			"intent": "AMAZON.CancelIntent"
+		},
+		{
+			"intent": "LastOrder"
+		},
+		{
+			"intent": "OweMoney"
+		},
+		{
+			"intent": "AddToBasket"
 		}
 	]
 }

@@ -3,3 +3,11 @@ TravisPerkins to buy {numberOfProducts} {product}
 TravisPerkins to purchase {numberOfProducts} {product}
 TravisPerkins order {numberOfProducts} {product}
 TravisPerkins to order {numberOfProducts} {product}
+LastOrder what was my last order
+LastOrder what did I last order from Travis Perkins
+OweMoney how much money do I owe on my Travis Perkins account
+OweMoney how much money do I owe to Travis Perkins
+OweMoney how much money do I owe Travis Perkins
+OweMoney do I owe Travis Perkins any money
+AddToBasket please buy from Travis Perkins one Baxi boiler
+AddToBasket please add a Baxi boiler to my basket
