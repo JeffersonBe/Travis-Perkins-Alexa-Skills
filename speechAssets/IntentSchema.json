@@ -1,0 +1,36 @@
+{
+	"intents": [{
+			"intent": "TravisPerkins",
+			"slots": [{
+					"name": "product",
+					"type": "products"
+				},
+				{
+					"name": "numberOfProducts",
+					"type": "AMAZON.NUMBER"
+				}
+			]
+		},
+		{
+			"intent": "AMAZON.RepeatIntent"
+		},
+		{
+			"intent": "AMAZON.HelpIntent"
+		},
+		{
+			"intent": "AMAZON.StopIntent"
+		},
+		{
+			"intent": "AMAZON.CancelIntent"
+		},
+		{
+			"intent": "LastOrder"
+		},
+		{
+			"intent": "OweMoney"
+		},
+		{
+			"intent": "AddToBasket"
+		}
+	]
+}
